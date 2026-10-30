@@ -1,15 +1,70 @@
-using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
-    public float speed = 5f;
+  <!DOCTYPE html>
+<html>
+<head>
+    <title>محرك الألعاب البسيط</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
 
-    void Update()
-    {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        let objects = [];
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        transform.position += movement * speed * Time.deltaTime;
-    }
-}
+        class GameObject {
+            constructor(x, y, width, height, color) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.color = color;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+
+            update() {
+                // يمكن إضافة منطق الحركة هنا
+            }
+        }
+
+        function addObject(x, y, width, height, color) {
+            const newObject = new GameObject(x, y, width, height, color);
+            objects.push(newObject);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            objects.forEach(object => {
+                object.draw();
+            });
+        }
+
+        function update() {
+            objects.forEach(object => {
+                object.update();
+            });
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // إضافة كائنات كمثال
+        addObject(100, 100, 50, 50, "red");
+        addObject(200, 150, 70, 30, "blue");
+        addObject(300, 200, 40, 80, "green");
+
+        gameLoop();
+    </script>
+</body>
+</html>
