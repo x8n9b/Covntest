@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>لعبة تخمين الرقم</title>
+    <title>عالمي الـ 3D الأول</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
-        .game-box { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        body { margin: 0; overflow: hidden; background: black; }
+        canvas { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="game-box">
-        <h1>لعبة التخمين</h1>
-        <p>خمن رقماً بين 1 و 10:</p>
-        <input type="number" id="guessInput">
-        <button onclick="checkGuess()">تحقق</button>
-        <p id="message"></p>
-    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // إعداد المشهد
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-    <script>
-        // الكمبيوتر يختار رقماً عشوائياً
-        let randomNumber = Math.floor(Math.random() * 10) + 1;
+    // صنع المكعب
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-        function checkGuess() {
-            let userGuess = document.getElementById("guessInput").value;
-            let message = document.getElementById("message");
+    camera.position.z = 5;
 
-            if (userGuess == randomNumber) {
-                message.innerHTML = "مبروك! لقد فزت!";
-                message.style.color = "green";
-            } else {
-                message.innerHTML = "خطأ، حاول مرة أخرى!";
-                message.style.color = "red";
-            }
-        }
-    </script>
-
+    // حركة المكعب
+    function animate() {
+        requestAnimationFrame(animate);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
 </body>
 </html>
