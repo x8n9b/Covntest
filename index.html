@@ -1,20 +1,40 @@
-<DOCTYPE html!> 
-<html> 
-<head> 
-<title>عنوان الصفحه</title> 
-<html> 
-<head> 
-<h1>هذا اول شيء اكتبه بحياتي بموقع</h1> 
-<p>هذا اول عنوان اضعه في الموقع</p> 
-<html> 
-<head> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>لعبة تخمين الرقم</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
+        .game-box { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
 
-<div style="background-color: red; padding: 20px;">
-        <h1>عنواني الرئيسي</h1>
+    <div class="game-box">
+        <h1>لعبة التخمين</h1>
+        <p>خمن رقماً بين 1 و 10:</p>
+        <input type="number" id="guessInput">
+        <button onclick="checkGuess()">تحقق</button>
+        <p id="message"></p>
     </div>
 
-    <div style="background-color: lightpurple; padding: 20px; margin-top: 10px;">
-        <p>هذا نص داخل كيس أزرق</p>
-    </div>
-<html> 
-<head> 
+    <script>
+        // الكمبيوتر يختار رقماً عشوائياً
+        let randomNumber = Math.floor(Math.random() * 10) + 1;
+
+        function checkGuess() {
+            let userGuess = document.getElementById("guessInput").value;
+            let message = document.getElementById("message");
+
+            if (userGuess == randomNumber) {
+                message.innerHTML = "مبروك! لقد فزت!";
+                message.style.color = "green";
+            } else {
+                message.innerHTML = "خطأ، حاول مرة أخرى!";
+                message.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>
